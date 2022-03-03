@@ -2,11 +2,16 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import { Box, Heading, IconButton } from '@chakra-ui/react';
 
 interface HeaderProps {
-  setOpen: (newValue: boolean) => void;
+  setDrawerOpen: (newValue: boolean) => void;
+  setProjectNameModalOpen: (newValue: boolean) => void;
   title: string;
 }
 
-export default function Header({ setOpen, title }: HeaderProps) {
+export default function Header({
+  setDrawerOpen,
+  setProjectNameModalOpen,
+  title,
+}: HeaderProps) {
   return (
     <Box display="flex" width="100%">
       <IconButton
@@ -14,7 +19,7 @@ export default function Header({ setOpen, title }: HeaderProps) {
         type="button"
         variant="unstyled"
         size="lg"
-        onClick={() => setOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         icon={
           <HamburgerIcon
             w={10}
@@ -26,7 +31,12 @@ export default function Header({ setOpen, title }: HeaderProps) {
       />
 
       <Box marginLeft="auto" p="4">
-        <Heading fontSize="5xl" color="white" fontWeight="bold">
+        <Heading
+          fontSize="5xl"
+          color="white"
+          fontWeight="bold"
+          onClick={() => setProjectNameModalOpen(true)}
+        >
           {title}
         </Heading>
       </Box>

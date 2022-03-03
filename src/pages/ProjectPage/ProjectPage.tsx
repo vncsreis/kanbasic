@@ -1,12 +1,13 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Box, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 import TaskList from '../../components/content/TaskList';
 import { TaskOnList } from '../../components/content/TaskListItem';
 import Header from '../../components/layout/Header';
 import NewTaskModal from '../../components/modals/NewTaskModal/NewTaskModal';
+import ProjectNameModal from '../../components/modals/ProjectNameModal';
 import {
   jsonToTask,
   ProjectIn,
@@ -27,9 +28,12 @@ interface Project {
 
 export default function ProjectPage() {
   const setDrawerOpen = useOutletContext<() => void>();
-  const [isAddTaskOpen, setAddTaskOpen] = useState(false);
+  const [isNewTaskModalOpen, setNewTaskModalOpen] = useState(false);
   const [newTask, setNewTask] = useState('');
+  const [newProjectName, setNewProjectName] = useState('');
+  const [isProjectNameModalOpen, setProjectNameModalOpen] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
 
   function loadFirstProject() {
     const projName = params.project as string;
@@ -108,7 +112,7 @@ export default function ProjectPage() {
     });
   }
 
-  function handleSubmitModal(e: React.FormEvent) {
+  function handleSubmitTaskModal(e: React.FormEvent) {
     e.preventDefault();
 
     const newTodo: TaskOnList[] = [
@@ -130,7 +134,18 @@ export default function ProjectPage() {
       },
     });
     setNewTask('');
-    setAddTaskOpen(false);
+    setNewTaskModalOpen(false);
+  }
+
+  function handleSubmitProjectModal(e: React.FormEvent) {
+    e.preventDefault();
+
+    setProject({ ...project, name: newProjectName });
+    setNewProjectName('');
+    setProjectNameModalOpen(false);
+    navigate(`/${newProjectName.toLowerCase().replace(' ', '%20')}`);
+
+    localStorage.removeItem(project.name.toLowerCase());
   }
 
   useEffect(() => {
@@ -153,15 +168,24 @@ export default function ProjectPage() {
     <>
       <Header
         title={capitalizeSentence(project.name)}
-        setOpen={setDrawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        setProjectNameModalOpen={setProjectNameModalOpen}
       />
 
       <NewTaskModal
-        handleSubmitModal={handleSubmitModal}
-        isAddTaskOpen={isAddTaskOpen}
+        handleSubmitNewTaskModal={handleSubmitTaskModal}
+        isNewTaskModalOpen={isNewTaskModalOpen}
         newTask={newTask}
-        setAddTaskOpen={setAddTaskOpen}
+        setNewTaskModalOpen={setNewTaskModalOpen}
         setNewTask={setNewTask}
+      />
+
+      <ProjectNameModal
+        handleSubmitProjectModal={handleSubmitProjectModal}
+        isProjectNameModalOpen={isProjectNameModalOpen}
+        setProjectNameModalOpen={setProjectNameModalOpen}
+        newProjectName={newProjectName}
+        setNewProjectName={setNewProjectName}
       />
 
       <Box py={4} px={4} h="90%" w="100%">
@@ -187,7 +211,7 @@ export default function ProjectPage() {
               rounded="full"
               aria-label="Add Task"
               icon={<AddIcon fontSize="4xl" />}
-              onClick={() => setAddTaskOpen(true)}
+              onClick={() => setNewTaskModalOpen(true)}
             />
           </GridItem>
 

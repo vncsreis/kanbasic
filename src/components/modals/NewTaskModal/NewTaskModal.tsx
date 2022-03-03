@@ -13,38 +13,38 @@ import {
 import React, { useRef } from 'react';
 
 interface NewTaskModalProps {
-  isAddTaskOpen: boolean;
-  setAddTaskOpen: (x: boolean) => void;
+  isNewTaskModalOpen: boolean;
+  setNewTaskModalOpen: (x: boolean) => void;
   newTask: string;
   setNewTask: (newTask: string) => void;
-  handleSubmitModal: (e: React.FormEvent) => void;
+  handleSubmitNewTaskModal: (e: React.FormEvent) => void;
 }
 
 export default function NewTaskModal({
-  isAddTaskOpen,
+  isNewTaskModalOpen,
   newTask,
-  setAddTaskOpen,
+  setNewTaskModalOpen,
   setNewTask,
-  handleSubmitModal,
+  handleSubmitNewTaskModal,
 }: NewTaskModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <Modal
-      isOpen={isAddTaskOpen}
+      isOpen={isNewTaskModalOpen}
       onClose={() => {}}
-      onEsc={() => setAddTaskOpen(false)}
-      onOverlayClick={() => setAddTaskOpen(false)}
+      onEsc={() => setNewTaskModalOpen(false)}
+      onOverlayClick={() => setNewTaskModalOpen(false)}
       initialFocusRef={inputRef}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Add New Task</ModalHeader>
-        <ModalCloseButton onClick={() => setAddTaskOpen(false)} />
+        <ModalCloseButton onClick={() => setNewTaskModalOpen(false)} />
         <ModalBody pb="4">
-          <form onSubmit={(e) => handleSubmitModal(e)}>
+          <form onSubmit={handleSubmitNewTaskModal}>
             <FormLabel htmlFor="name">Task Name</FormLabel>
             <Input
-              id="name"
+              id="new-task"
               type="text"
               onChange={(e) => setNewTask(e.target.value)}
               value={newTask}
