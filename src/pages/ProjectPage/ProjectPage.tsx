@@ -1,27 +1,19 @@
 import { AddIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  FormLabel,
-  Grid,
-  GridItem,
-  IconButton,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { Box, Grid, GridItem, IconButton } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
-import TaskList from '../components/content/TaskList';
-import { TaskOnList } from '../components/content/TaskListItem';
-import Header from '../components/layout/Header';
-import { jsonToTask, ProjectIn, taskToJson } from '../content/handleTaskToJson';
-import { initProject } from '../content/tasks';
+import TaskList from '../../components/content/TaskList';
+import { TaskOnList } from '../../components/content/TaskListItem';
+import Header from '../../components/layout/Header';
+import NewTaskModal from '../../components/modals/NewTaskModal/NewTaskModal';
+import {
+  jsonToTask,
+  ProjectIn,
+  taskToJson,
+} from '../../content/handleTaskToJson';
+import { initProject } from '../../content/tasks';
+import capitalizeSentence from '../../utils/capitalizeSentence';
 import './ProjectPage.css';
 
 interface Project {
@@ -37,7 +29,6 @@ export default function ProjectPage() {
   const setDrawerOpen = useOutletContext<() => void>();
   const [isAddTaskOpen, setAddTaskOpen] = useState(false);
   const [newTask, setNewTask] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
   const params = useParams();
 
   function loadFirstProject() {
@@ -153,45 +144,25 @@ export default function ProjectPage() {
     };
 
     localStorage.setItem(
-      'Project 1',
+      project.name.toLowerCase(),
       JSON.stringify(taskToJson(projectToStore)),
     );
   }, [project]);
 
   return (
     <>
-      <Header title={project.name} setOpen={setDrawerOpen} />
+      <Header
+        title={capitalizeSentence(project.name)}
+        setOpen={setDrawerOpen}
+      />
 
-      <Modal
-        isOpen={isAddTaskOpen}
-        onClose={() => {}}
-        onEsc={() => setAddTaskOpen(false)}
-        onOverlayClick={() => setAddTaskOpen(false)}
-        initialFocusRef={inputRef}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add New Task</ModalHeader>
-          <ModalCloseButton onClick={() => setAddTaskOpen(false)} />
-          <ModalBody pb="4">
-            <form onSubmit={(e) => handleSubmitModal(e)}>
-              <FormLabel htmlFor="name">Task Name</FormLabel>
-              <Input
-                id="name"
-                type="text"
-                onChange={(e) => setNewTask(e.target.value)}
-                value={newTask}
-                ref={inputRef}
-              />
-              <Box p="4" display="flex" justifyContent="flex-end">
-                <Button type="submit" colorScheme="blue">
-                  Submit
-                </Button>
-              </Box>
-            </form>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <NewTaskModal
+        handleSubmitModal={handleSubmitModal}
+        isAddTaskOpen={isAddTaskOpen}
+        newTask={newTask}
+        setAddTaskOpen={setAddTaskOpen}
+        setNewTask={setNewTask}
+      />
 
       <Box py={4} px={4} h="90%" w="100%">
         <Grid templateColumns="repeat(3, 1fr)" h="100%">
