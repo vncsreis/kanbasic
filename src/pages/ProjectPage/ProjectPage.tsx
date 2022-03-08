@@ -15,6 +15,7 @@ import {
 } from '../../content/handleTaskToJson';
 import { initProject } from '../../content/tasks';
 import capitalizeSentence from '../../utils/capitalizeSentence';
+import splitProjectTitle from '../../utils/splitProjectTitle';
 import './ProjectPage.css';
 
 interface Project {
@@ -38,7 +39,9 @@ export default function ProjectPage() {
   function loadFirstProject() {
     const projName = params.project as string;
 
-    const proj = localStorage.getItem(projName.replace('%20', ' '));
+    const proj = localStorage.getItem(
+      `kanbasic-${projName.replace('%20', ' ')}`,
+    );
 
     if (proj) {
       const parsedProject: ProjectIn = jsonToTask(JSON.parse(proj));
@@ -145,7 +148,7 @@ export default function ProjectPage() {
     setProjectNameModalOpen(false);
     navigate(`/${newProjectName.toLowerCase().replace(' ', '%20')}`);
 
-    localStorage.removeItem(project.name.toLowerCase());
+    localStorage.removeItem(`kanbasic-${project.name.replace('%20', ' ')}`);
   }
 
   useEffect(() => {
@@ -159,7 +162,7 @@ export default function ProjectPage() {
     };
 
     localStorage.setItem(
-      project.name.toLowerCase(),
+      `kanbasic-${project.name.replace('%20', ' ')}`,
       JSON.stringify(taskToJson(projectToStore)),
     );
   }, [project]);
@@ -167,7 +170,7 @@ export default function ProjectPage() {
   return (
     <>
       <Header
-        title={capitalizeSentence(project.name)}
+        title={capitalizeSentence(splitProjectTitle(project.name))}
         setDrawerOpen={setDrawerOpen}
         setProjectNameModalOpen={setProjectNameModalOpen}
       />
