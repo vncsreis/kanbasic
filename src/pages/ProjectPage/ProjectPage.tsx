@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 import TaskList from '../../components/content/TaskList';
 import { TaskOnList } from '../../components/content/TaskListItem';
 import Header from '../../components/layout/Header';
+import NewProjectModal from '../../components/modals/NewProjectModal/NewProjectModal';
 import NewTaskModal from '../../components/modals/NewTaskModal/NewTaskModal';
 import ProjectNameModal from '../../components/modals/ProjectNameModal';
 import {
@@ -15,7 +16,6 @@ import {
 } from '../../content/handleTaskToJson';
 import { initProject } from '../../content/tasks';
 import capitalizeSentence from '../../utils/capitalizeSentence';
-import splitProjectTitle from '../../utils/splitProjectTitle';
 import './ProjectPage.css';
 
 interface Project {
@@ -27,20 +27,26 @@ interface Project {
   };
 }
 
+interface OutletContext {
+  openDrawer: () => void;
+  setProjectsChanged: () => void;
+  isNewProjectModalOpen: boolean;
+  setNewProjectModalOpen: (newVal: boolean) => void;
+}
+
 export default function ProjectPage() {
-  const setDrawerOpen = useOutletContext<() => void>();
+  const context = useOutletContext<OutletContext>();
   const [isNewTaskModalOpen, setNewTaskModalOpen] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newProjectName, setNewProjectName] = useState('');
   const [isProjectNameModalOpen, setProjectNameModalOpen] = useState(false);
+  const [newProject, setNewProject] = useState('');
   const params = useParams();
   const navigate = useNavigate();
 
-  function loadFirstProject() {
-    const projName = params.project as string;
-
+  function loadProject(project: string) {
     const proj = localStorage.getItem(
-      `kanbasic-${projName.replace('%20', ' ')}`,
+      `kanbasic-${project.replace('%20', ' ')}`,
     );
 
     if (proj) {
@@ -51,7 +57,9 @@ export default function ProjectPage() {
     return initProject;
   }
 
-  const [project, setProject] = useState<Project>(loadFirstProject());
+  const [project, setProject] = useState<Project>(
+    loadProject(params.project ?? 'new project'),
+  );
 
   function advanceToDoing(task: TaskOnList) {
     const newTodo = project.tasks.todo
@@ -148,7 +156,27 @@ export default function ProjectPage() {
     setProjectNameModalOpen(false);
     navigate(`/${newProjectName.toLowerCase().replace(' ', '%20')}`);
 
-    localStorage.removeItem(`kanbasic-${project.name.replace('%20', ' ')}`);
+    localStorage.removeItem(
+      `kanbasic-${project.name.toLowerCase().replace('%20', ' ')}`,
+    );
+  }
+
+  function handleSubmitNewProjectModal(e: React.FormEvent) {
+    e.preventDefault();
+
+    localStorage.setItem(
+      `kanbasic-${newProject.toLowerCase()}`,
+      JSON.stringify({
+        name: capitalizeSentence(newProject),
+        tasks: {
+          todo: [],
+          doing: [],
+          done: [],
+        },
+      }),
+    );
+    context.setNewProjectModalOpen(false);
+    navigate(`/${newProject.toLowerCase()}`);
   }
 
   useEffect(() => {
@@ -162,16 +190,24 @@ export default function ProjectPage() {
     };
 
     localStorage.setItem(
-      `kanbasic-${project.name.replace('%20', ' ')}`,
+      `kanbasic-${project.name.toLowerCase().replace('%20', ' ')}`,
       JSON.stringify(taskToJson(projectToStore)),
     );
   }, [project]);
 
+  useEffect(() => {
+    context.setProjectsChanged();
+  }, [project.name]);
+
+  useEffect(() => {
+    setProject(loadProject(params.project ?? 'new project'));
+  }, [params.project]);
+
   return (
     <>
       <Header
-        title={capitalizeSentence(splitProjectTitle(project.name))}
-        setDrawerOpen={setDrawerOpen}
+        title={capitalizeSentence(project.name)}
+        setDrawerOpen={context.openDrawer}
         setProjectNameModalOpen={setProjectNameModalOpen}
       />
 
@@ -189,6 +225,14 @@ export default function ProjectPage() {
         setProjectNameModalOpen={setProjectNameModalOpen}
         newProjectName={newProjectName}
         setNewProjectName={setNewProjectName}
+      />
+
+      <NewProjectModal
+        handleSubmitNewProjectModal={handleSubmitNewProjectModal}
+        isNewProjectModalOpen={context.isNewProjectModalOpen}
+        newProject={newProject}
+        setNewProject={setNewProject}
+        setNewProjectModalOpen={context.setNewProjectModalOpen}
       />
 
       <Box py={4} px={4} h="90%" w="100%">

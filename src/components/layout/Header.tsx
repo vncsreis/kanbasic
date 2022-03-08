@@ -36,13 +36,20 @@ export default function Header({
           color="white"
           fontWeight="bold"
           onClick={() => setProjectNameModalOpen(true)}
+          cursor="pointer"
         >
           {title}
         </Heading>
       </Box>
 
       <Box marginLeft="auto">
-        <Heading size="lg" fontWeight="light" color="white" padding="2">
+        <Heading
+          cursor="default"
+          size="lg"
+          fontWeight="light"
+          color="white"
+          padding="2"
+        >
           Kanbasic
         </Heading>
       </Box>

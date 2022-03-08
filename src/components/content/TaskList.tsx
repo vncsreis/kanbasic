@@ -22,6 +22,7 @@ export default function TaskList({
           borderColor="#ccc"
           color="white"
           fontWeight="light"
+          cursor="default"
         >
           {name}
         </Heading>
