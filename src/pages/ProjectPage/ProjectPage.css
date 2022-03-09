@@ -26,19 +26,19 @@
 }
 
 .slide-in {
-  animation: slide-in ease-in-out 1s;
+  animation: slide-in ease-in-out 0.75s;
 }
 
 .slide-out {
-  animation: slide-out ease-in-out 1s;
+  animation: slide-out ease-in-out 0.75s;
   height: 0px !important;
   width: 0px !important;
   visibility: hidden;
   padding: 0px !important;
   margin: 0px !important;
 
-  transition: height ease 0.5s 1s, width ease 0s 1s, visibility ease 0s 1s,
-    padding ease 0.5s 1s, margin ease 0.5s 1s;
+  transition: height ease 0.5s 0.75s, width ease 0s 0.75s,
+    visibility ease 0s 0.75s, padding ease 0.5s 0.75s, margin ease 0.5s 0.75s;
 }
 
 @keyframes fade-in-text {
@@ -58,6 +58,6 @@
 }
 
 .fade-in-text {
-  animation: fade-in-text ease-in-out 2s;
+  animation: fade-in-text ease-in-out 1.5s;
   opacity: 0.8;
 }
