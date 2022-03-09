@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Grid, GridItem, IconButton } from '@chakra-ui/react';
+import { Box, Grid, GridItem, IconButton, useToast } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -37,6 +37,7 @@ export default function ProjectPage() {
   const [newProject, setNewProject] = useState('');
   const params = useParams();
   const navigate = useNavigate();
+  const toast = useToast();
 
   function loadProject(project: string) {
     const proj = localStorage.getItem(
@@ -120,57 +121,87 @@ export default function ProjectPage() {
   function handleSubmitTaskModal(e: React.FormEvent) {
     e.preventDefault();
 
-    const newTodo: TaskOnList[] = [
-      ...project.tasks.todo.filter((t) => t.visible),
-      {
-        name: newTask,
-        visible: true,
-        id: v4(),
-        animation: true,
-        status: 'todo',
-      },
-    ];
+    if (newTask !== '') {
+      const newTodo: TaskOnList[] = [
+        ...project.tasks.todo.filter((t) => t.visible),
+        {
+          name: newTask,
+          visible: true,
+          id: v4(),
+          animation: true,
+          status: 'todo',
+        },
+      ];
 
-    setProject({
-      ...project,
-      tasks: {
-        ...project.tasks,
-        todo: newTodo,
-      },
-    });
-    setNewTask('');
-    setNewTaskModalOpen(false);
+      setProject({
+        ...project,
+        tasks: {
+          ...project.tasks,
+          todo: newTodo,
+        },
+      });
+      setNewTask('');
+      setNewTaskModalOpen(false);
+    } else {
+      toast({
+        title: 'Invalid task',
+        description: "Task can't be empty",
+        status: 'error',
+        position: 'top',
+        duration: 4000,
+      });
+    }
   }
 
   function handleSubmitProjectModal(e: React.FormEvent) {
     e.preventDefault();
+    if (newProjectName !== '' && newProjectName.indexOf('/') === -1) {
+      setProject({ ...project, name: newProjectName });
+      setNewProjectName('');
+      setProjectNameModalOpen(false);
+      navigate(`/${newProjectName.toLowerCase().replace(' ', '%20')}`);
 
-    setProject({ ...project, name: newProjectName });
-    setNewProjectName('');
-    setProjectNameModalOpen(false);
-    navigate(`/${newProjectName.toLowerCase().replace(' ', '%20')}`);
-
-    localStorage.removeItem(
-      `kanbasic-${project.name.toLowerCase().replace('%20', ' ')}`,
-    );
+      localStorage.removeItem(
+        `kanbasic-${project.name.toLowerCase().replace('%20', ' ')}`,
+      );
+    } else {
+      toast({
+        title: 'Invalid input',
+        description: 'Name must contain 1 or more characters and no "/"',
+        status: 'error',
+        position: 'top',
+        duration: 4000,
+      });
+    }
   }
 
   function handleSubmitNewProjectModal(e: React.FormEvent) {
     e.preventDefault();
 
-    localStorage.setItem(
-      `kanbasic-${newProject.toLowerCase()}`,
-      JSON.stringify({
-        name: capitalizeSentence(newProject),
-        tasks: {
-          todo: [],
-          doing: [],
-          done: [],
-        },
-      }),
-    );
-    context.setNewProjectModalOpen(false);
-    navigate(`/${newProject.toLowerCase()}`);
+    if (newProject !== '' && newProject.indexOf('/') === -1) {
+      localStorage.setItem(
+        `kanbasic-${newProject.toLowerCase()}`,
+        JSON.stringify({
+          name: capitalizeSentence(newProject),
+          tasks: {
+            todo: [],
+            doing: [],
+            done: [],
+          },
+        }),
+      );
+      context.setNewProjectModalOpen(false);
+      setNewProject('');
+      navigate(`/${newProject.toLowerCase()}`);
+    } else {
+      toast({
+        title: 'Invalid input',
+        description: 'Name must contain 1 or more characters and no "/"',
+        status: 'error',
+        position: 'top',
+        duration: 4000,
+      });
+    }
   }
 
   useEffect(() => {
