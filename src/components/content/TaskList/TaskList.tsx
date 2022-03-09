@@ -1,5 +1,5 @@
-import { Flex, Heading, List } from '@chakra-ui/react';
-import TaskListItem, { TaskOnList } from './TaskListItem';
+import { Flex, Heading, List } from "@chakra-ui/react";
+import TaskListItem, { TaskOnList } from "../TaskListItem";
 
 export interface TaskListProps {
   name: string;

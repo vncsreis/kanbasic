@@ -6,8 +6,8 @@ import { v4 } from 'uuid';
 import TaskList from '../../components/content/TaskList';
 import { TaskOnList } from '../../components/content/TaskListItem';
 import Header from '../../components/layout/Header';
-import NewProjectModal from '../../components/modals/NewProjectModal/NewProjectModal';
-import NewTaskModal from '../../components/modals/NewTaskModal/NewTaskModal';
+import NewProjectModal from '../../components/modals/NewProjectModal';
+import NewTaskModal from '../../components/modals/NewTaskModal';
 import ProjectNameModal from '../../components/modals/ProjectNameModal';
 import {
   jsonToTask,
@@ -235,9 +235,10 @@ export default function ProjectPage() {
         setNewProjectModalOpen={context.setNewProjectModalOpen}
       />
 
-      <Box py={4} px={4} h="90%" w="100%">
+      <Box as="main" py={4} px={4} h="90%" w="100%">
         <Grid templateColumns="repeat(3, 1fr)" h="100%">
           <GridItem
+            as="section"
             display="flex"
             flexDir="column"
             borderRightWidth="1px"
@@ -262,7 +263,7 @@ export default function ProjectPage() {
             />
           </GridItem>
 
-          <GridItem h="100%">
+          <GridItem h="100%" as="section">
             <TaskList
               name="Doing"
               advance={(task: TaskOnList) => advanceToDone(task)}
@@ -270,7 +271,7 @@ export default function ProjectPage() {
             />
           </GridItem>
 
-          <GridItem borderLeftWidth="1px" h="100%">
+          <GridItem borderLeftWidth="1px" h="100%" as="section">
             <TaskList
               name="Done"
               tasks={project.tasks.done}

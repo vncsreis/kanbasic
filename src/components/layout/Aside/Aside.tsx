@@ -1,4 +1,4 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   AccordionButton,
@@ -16,11 +16,11 @@ import {
   List,
   ListItem,
   Text,
-} from '@chakra-ui/react';
-import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import capitalizeSentence from '../../utils/capitalizeSentence';
-import splitProjectTitle from '../../utils/splitProjectTitle';
+} from "@chakra-ui/react";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import capitalizeSentence from "../../../utils/capitalizeSentence";
+import splitProjectTitle from "../../../utils/splitProjectTitle";
 
 interface AsideProps {
   isOpen: boolean;
@@ -52,7 +52,7 @@ export default function Aside({
     }
 
     if (Object.keys(localStorage).length === 0) {
-      navigate('new project');
+      navigate("new project");
     }
   }
 
@@ -115,7 +115,7 @@ export default function Aside({
                           key={p}
                           display="flex"
                           alignItems="center"
-                          _hover={{ backgroundColor: '#ddd' }}
+                          _hover={{ backgroundColor: "#ddd" }}
                           transition="ease-in-out background-color .25s"
                           cursor="pointer"
                         >
@@ -133,7 +133,7 @@ export default function Aside({
                             {capitalizeSentence(p)}
                           </Text>
                           <IconButton
-                            _hover={{ backgroundColor: 'transparent' }}
+                            _hover={{ backgroundColor: "transparent" }}
                             backgroundColor="transparent"
                             mr={2}
                             aria-label="Delete project"

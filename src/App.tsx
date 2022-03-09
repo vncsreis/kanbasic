@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Aside from './components/layout/Aside';
-import PageLayout from './components/layout/PageLayout';
-import splitProjectTitle from './utils/splitProjectTitle';
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import Aside from "./components/layout/Aside/Aside";
+import PageLayout from "./components/layout/PageLayout";
+import splitProjectTitle from "./utils/splitProjectTitle";
 
 export default function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

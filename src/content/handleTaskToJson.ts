@@ -1,5 +1,5 @@
-import { TaskOnList } from '../components/content/TaskListItem';
-import { Task } from './tasks';
+import { TaskOnList } from "../components/content/TaskListItem/TaskListItem";
+import { Task } from "./tasks";
 
 export interface ProjectIn {
   name: string;
