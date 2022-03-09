@@ -1,4 +1,5 @@
 import { Box, Heading } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import OpenAsideButton from '../OpenAsideButton';
 
 interface HeaderProps {
@@ -31,16 +32,17 @@ export default function Header({
       </Box>
 
       <Box flexGrow={1} flexBasis={0}>
-        <Heading
-          textAlign="right"
-          cursor="default"
-          size="lg"
-          fontWeight="light"
-          color="white"
-          padding="2"
-        >
-          Kanbasic
-        </Heading>
+        <Link to="/">
+          <Heading
+            textAlign="right"
+            size="lg"
+            fontWeight="light"
+            color="white"
+            padding="2"
+          >
+            Kanbasic
+          </Heading>
+        </Link>
       </Box>
     </Box>
   );
