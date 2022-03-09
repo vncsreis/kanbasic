@@ -3,6 +3,7 @@ import { Box, Grid, GridItem, IconButton } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
+import { OutletContextProps } from '../../App';
 import TaskList from '../../components/content/TaskList';
 import { TaskOnList } from '../../components/content/TaskListItem';
 import Header from '../../components/layout/Header';
@@ -27,15 +28,8 @@ interface Project {
   };
 }
 
-interface OutletContext {
-  openDrawer: () => void;
-  setProjectsChanged: () => void;
-  isNewProjectModalOpen: boolean;
-  setNewProjectModalOpen: (newVal: boolean) => void;
-}
-
 export default function ProjectPage() {
-  const context = useOutletContext<OutletContext>();
+  const context = useOutletContext<OutletContextProps>();
   const [isNewTaskModalOpen, setNewTaskModalOpen] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newProjectName, setNewProjectName] = useState('');
