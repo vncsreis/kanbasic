@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import Aside from "./components/layout/Aside/Aside";
-import PageLayout from "./components/layout/PageLayout";
-import splitProjectTitle from "./utils/splitProjectTitle";
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Aside from './components/layout/Aside/Aside';
+import PageLayout from './components/layout/PageLayout';
+import splitProjectTitle from './utils/splitProjectTitle';
+
+export interface OutletContextProps {
+  openDrawer: () => void;
+  setProjectsChanged: () => void;
+  isNewProjectModalOpen: boolean;
+  setNewProjectModalOpen: (bool: boolean) => void;
+}
 
 export default function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
