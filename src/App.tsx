@@ -20,8 +20,13 @@ export default function App() {
   useEffect(() => {
     if (projectsChanged) {
       const projectKeys = Object.keys(localStorage);
-      const projectArray = projectKeys.map((p) => splitProjectTitle(p));
-      setProjects(projectArray);
+      const projectArray = projectKeys.map((p) => {
+        if (p.includes('kanbasic-')) {
+          return splitProjectTitle(p);
+        }
+        return '';
+      });
+      setProjects(projectArray.filter((p) => p !== ''));
       setProjectsChanged(false);
     }
   }, [projectsChanged]);

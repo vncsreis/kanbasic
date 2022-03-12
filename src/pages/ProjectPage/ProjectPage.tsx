@@ -11,10 +11,10 @@ import NewProjectModal from '../../components/modals/NewProjectModal';
 import NewTaskModal from '../../components/modals/NewTaskModal';
 import ProjectNameModal from '../../components/modals/ProjectNameModal';
 import {
-  jsonToTask,
+  formatToGet,
+  formatToStore,
   ProjectIn,
-  taskToJson,
-} from '../../content/handleTaskToJson';
+} from '../../content/projectFormat';
 import { initProject } from '../../content/tasks';
 import capitalizeSentence from '../../utils/capitalizeSentence';
 import './ProjectPage.css';
@@ -45,7 +45,7 @@ export default function ProjectPage() {
     );
 
     if (proj) {
-      const parsedProject: ProjectIn = jsonToTask(JSON.parse(proj));
+      const parsedProject: ProjectIn = formatToGet(JSON.parse(proj));
 
       return parsedProject;
     }
@@ -216,7 +216,7 @@ export default function ProjectPage() {
 
     localStorage.setItem(
       `kanbasic-${project.name.toLowerCase().replace('%20', ' ')}`,
-      JSON.stringify(taskToJson(projectToStore)),
+      JSON.stringify(formatToStore(projectToStore)),
     );
   }, [project]);
 

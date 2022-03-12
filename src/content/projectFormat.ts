@@ -1,5 +1,5 @@
-import { TaskOnList } from "../components/content/TaskListItem/TaskListItem";
-import { Task } from "./tasks";
+import { TaskOnList } from '../components/content/TaskListItem/TaskListItem';
+import { Task } from './tasks';
 
 export interface ProjectIn {
   name: string;
@@ -19,7 +19,7 @@ export interface ProjectOut {
   };
 }
 
-export function taskToJson(project: ProjectIn) {
+export function formatToStore(project: ProjectIn) {
   const projectToJson = {
     name: project.name,
     tasks: {
@@ -44,7 +44,7 @@ export function taskToJson(project: ProjectIn) {
   return projectToJson;
 }
 
-export function jsonToTask(project: ProjectOut) {
+export function formatToGet(project: ProjectOut) {
   const projectToReturn = {
     name: project.name,
     tasks: {

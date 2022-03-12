@@ -4,10 +4,16 @@ import {
   CheckIcon,
   QuestionIcon,
   WarningIcon,
-} from "@chakra-ui/icons";
-import { IconButton, ListIcon, ListItem, Text } from "@chakra-ui/react";
-import React from "react";
-import { Task } from "../../../content/tasks";
+} from '@chakra-ui/icons';
+import {
+  IconButton,
+  ListIcon,
+  ListItem,
+  Text,
+  Tooltip,
+} from '@chakra-ui/react';
+import React from 'react';
+import { Task } from '../../../content/tasks';
 
 export interface TaskOnList extends Task {
   visible: boolean;
@@ -22,11 +28,11 @@ interface TaskListItemProps {
 export default function TaskListItem({ task, advance }: TaskListItemProps) {
   function defineIcon(stat: string) {
     switch (stat) {
-      case "todo":
+      case 'todo':
         return <QuestionIcon color="blue.500" />;
-      case "doing":
+      case 'doing':
         return <WarningIcon color="yellow.500" />;
-      case "done":
+      case 'done':
         return <CheckCircleIcon color="green.500" />;
       default:
         return <div />;
@@ -35,20 +41,23 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
 
   function defineButtonIcon(stat: string) {
     switch (stat) {
-      case "todo":
+      case 'todo':
         return {
           icon: <ArrowForwardIcon />,
-          color: "blue",
+          color: 'blue',
+          tooltip: 'Start task',
         };
-      case "doing":
+      case 'doing':
         return {
           icon: <ArrowForwardIcon />,
-          color: "yellow",
+          color: 'yellow',
+          tooltip: 'Complete task',
         };
-      case "done":
+      case 'done':
         return {
           icon: <CheckIcon />,
-          color: "green",
+          color: 'green',
+          tooltip: 'Clear task',
         };
       default:
         return {};
@@ -62,11 +71,11 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
   function getAnimationType(t: TaskOnList) {
     if (t.animation) {
       if (t.visible) {
-        return "slide-in";
+        return 'slide-in';
       }
-      return "slide-out";
+      return 'slide-out';
     }
-    return "";
+    return '';
   }
 
   return (
@@ -84,7 +93,7 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
       boxShadow="dark-lg"
       tabIndex={0}
       onKeyPress={(e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           advance(task);
         }
       }}
@@ -94,21 +103,28 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
         {task.name}
       </Text>
 
-      <IconButton
-        aria-label="Move to next section"
-        colorScheme={nextButton.color}
-        opacity={0}
-        _groupFocus={{ opacity: 1 }}
-        _groupHover={{ opacity: 1 }}
-        ml="auto"
-        color="white"
-        icon={nextButton.icon}
-        onClick={() => {
-          if (task.visible) {
-            advance(task);
-          }
-        }}
-      />
+      <Tooltip
+        label={nextButton.tooltip}
+        hasArrow
+        borderRadius="lg"
+        closeOnMouseDown
+      >
+        <IconButton
+          aria-label="Move to next section"
+          colorScheme={nextButton.color}
+          opacity={0}
+          _groupFocus={{ opacity: 1 }}
+          _groupHover={{ opacity: 1 }}
+          ml="auto"
+          color="white"
+          icon={nextButton.icon}
+          onClick={() => {
+            if (task.visible) {
+              advance(task);
+            }
+          }}
+        />
+      </Tooltip>
     </ListItem>
   );
 }
