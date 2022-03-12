@@ -7,9 +7,7 @@ import { OutletContextProps } from '../../App';
 import TaskList from '../../components/content/TaskList';
 import { TaskOnList } from '../../components/content/TaskListItem';
 import Header from '../../components/layout/Header';
-import NewProjectModal from '../../components/modals/NewProjectModal';
-import NewTaskModal from '../../components/modals/NewTaskModal';
-import ProjectNameModal from '../../components/modals/ProjectNameModal';
+import BaseModal from '../../components/modals/BaseModal';
 import {
   formatToGet,
   formatToStore,
@@ -236,28 +234,37 @@ export default function ProjectPage() {
         setProjectNameModalOpen={setProjectNameModalOpen}
       />
 
-      <NewTaskModal
-        handleSubmitNewTaskModal={handleSubmitTaskModal}
-        isNewTaskModalOpen={isNewTaskModalOpen}
-        newTask={newTask}
-        setNewTaskModalOpen={setNewTaskModalOpen}
-        setNewTask={setNewTask}
+      <BaseModal
+        buttonText="Submit"
+        handleSubmitModal={handleSubmitTaskModal}
+        isModalOpen={isNewTaskModalOpen}
+        label="Task Name"
+        setModalOpen={setNewTaskModalOpen}
+        setTextInput={setNewTask}
+        textInput={newTask}
+        title="Add New Task"
       />
 
-      <ProjectNameModal
-        handleSubmitProjectModal={handleSubmitProjectModal}
-        isProjectNameModalOpen={isProjectNameModalOpen}
-        setProjectNameModalOpen={setProjectNameModalOpen}
-        newProjectName={newProjectName}
-        setNewProjectName={setNewProjectName}
+      <BaseModal
+        buttonText="Submit"
+        handleSubmitModal={handleSubmitProjectModal}
+        isModalOpen={isProjectNameModalOpen}
+        label="New Project Name"
+        setModalOpen={setProjectNameModalOpen}
+        setTextInput={setNewProjectName}
+        textInput={newProjectName}
+        title="Change Project Name"
       />
 
-      <NewProjectModal
-        handleSubmitNewProjectModal={handleSubmitNewProjectModal}
-        isNewProjectModalOpen={context.isNewProjectModalOpen}
-        newProject={newProject}
-        setNewProject={setNewProject}
-        setNewProjectModalOpen={context.setNewProjectModalOpen}
+      <BaseModal
+        buttonText="Submit"
+        handleSubmitModal={handleSubmitNewProjectModal}
+        isModalOpen={context.isNewProjectModalOpen}
+        label="New Project Name"
+        setModalOpen={context.setNewProjectModalOpen}
+        setTextInput={setNewProject}
+        textInput={newProject}
+        title="Change Project Name"
       />
 
       <Box as="main" py={4} px={4} h="90%" w="100%">

@@ -1,10 +1,10 @@
 import { Button, Flex, Heading, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { OutletContextProps } from '../../App';
 import OpenAsideButton from '../../components/layout/OpenAsideButton';
 import PageLayout from '../../components/layout/PageLayout';
-import NewProjectModal from '../../components/modals/NewProjectModal';
+import BaseModal from '../../components/modals/BaseModal';
 import capitalizeSentence from '../../utils/capitalizeSentence';
 
 export default function HomePage() {
@@ -44,12 +44,15 @@ export default function HomePage() {
 
   return (
     <PageLayout>
-      <NewProjectModal
-        handleSubmitNewProjectModal={handleSubmitNewProjectModal}
-        isNewProjectModalOpen={context.isNewProjectModalOpen}
-        newProject={newProject}
-        setNewProject={setNewProject}
-        setNewProjectModalOpen={context.setNewProjectModalOpen}
+      <BaseModal
+        buttonText="Submit"
+        handleSubmitModal={handleSubmitNewProjectModal}
+        isModalOpen={context.isNewProjectModalOpen}
+        label="New Project Name"
+        setModalOpen={context.setNewProjectModalOpen}
+        setTextInput={setNewProject}
+        textInput={newProject}
+        title="Create New Project"
       />
       <header>
         <OpenAsideButton onClick={() => context.openDrawer()} />
@@ -64,17 +67,18 @@ export default function HomePage() {
           Kanbasic
         </Heading>
 
-        <Link to="/new project">
-          <Button
-            fontSize="3xl"
-            p="8"
-            mt="10"
-            colorScheme="blue"
-            boxShadow="dark-lg"
-          >
-            Start
-          </Button>
-        </Link>
+        <Button
+          fontSize="3xl"
+          p="8"
+          mt="10"
+          colorScheme="blue"
+          boxShadow="dark-lg"
+          onClick={() => {
+            context.setNewProjectModalOpen(true);
+          }}
+        >
+          Start
+        </Button>
       </Flex>
     </PageLayout>
   );
