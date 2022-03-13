@@ -6,6 +6,7 @@ import OpenAsideButton from '../../components/layout/OpenAsideButton';
 import PageLayout from '../../components/layout/PageLayout';
 import BaseModal from '../../components/modals/BaseModal';
 import capitalizeSentence from '../../utils/capitalizeSentence';
+import './HomePage.css';
 
 export default function HomePage() {
   const context = useOutletContext<OutletContextProps>();
@@ -57,12 +58,20 @@ export default function HomePage() {
       <header>
         <OpenAsideButton onClick={() => context.openDrawer()} />
       </header>
-      <Flex mx="auto" mt="44" flexDir="column" alignItems="center">
+      <Flex
+        mx="auto"
+        mt="44"
+        flexDir="column"
+        alignItems="center"
+        height="full"
+        overflow="hidden"
+      >
         <Heading
           cursor="default"
           fontSize="9xl"
           color="white"
           textDecoration="underline"
+          className="home-heading"
         >
           Kanbasic
         </Heading>
@@ -76,6 +85,7 @@ export default function HomePage() {
           onClick={() => {
             context.setNewProjectModalOpen(true);
           }}
+          className="home-button"
         >
           Start
         </Button>
