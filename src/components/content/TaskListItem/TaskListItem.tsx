@@ -46,18 +46,21 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
           icon: <ArrowForwardIcon />,
           color: 'blue',
           tooltip: 'Start task',
+          label: 'Move to doing section',
         };
       case 'doing':
         return {
           icon: <ArrowForwardIcon />,
           color: 'yellow',
           tooltip: 'Complete task',
+          label: 'Move to done section',
         };
       case 'done':
         return {
           icon: <CheckIcon />,
           color: 'green',
           tooltip: 'Clear task',
+          label: 'Remove from project',
         };
       default:
         return {};
@@ -110,7 +113,7 @@ export default function TaskListItem({ task, advance }: TaskListItemProps) {
         closeOnMouseDown
       >
         <IconButton
-          aria-label="Move to next section"
+          aria-label={nextButton.label ?? 'Advance'}
           colorScheme={nextButton.color}
           opacity={0}
           _groupFocus={{ opacity: 1 }}
