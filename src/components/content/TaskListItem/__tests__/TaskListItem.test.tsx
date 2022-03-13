@@ -1,6 +1,7 @@
 import { List } from '@chakra-ui/react';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import path from 'path';
 import TaskListItem, { TaskOnList } from '..';
 import { appendStyle } from '../../../../__testUtils__/appendStyle';
 
@@ -69,7 +70,7 @@ describe('Task List tests', () => {
 
     appendStyle(
       view.container,
-      '../../../../pages/ProjectPage/ProjectPage.css',
+      path.join(__dirname, '../../../../pages/ProjectPage/ProjectPage.css'),
     );
 
     const text = screen.getByText('Test');
