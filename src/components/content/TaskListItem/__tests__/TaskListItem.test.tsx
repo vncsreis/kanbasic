@@ -1,19 +1,8 @@
 import { List } from '@chakra-ui/react';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import fs from 'fs';
-import path from 'path';
 import TaskListItem, { TaskOnList } from '..';
-
-// eslint-disable-next-line import/prefer-default-export
-export function appendStyle(container: HTMLElement, pathToFile: string) {
-  // get App.css file and append to document, so classes are effectively applied
-  const cssFile = fs.readFileSync(path.resolve(__dirname, pathToFile), 'utf-8');
-  const style = document.createElement('style');
-
-  style.innerHTML = cssFile;
-  container.append(style);
-}
+import { appendStyle } from '../../../../__testUtils__/appendStyle';
 
 jest.mock('@chakra-ui/icons', () => ({
   __esmodule: true,
