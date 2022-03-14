@@ -13,7 +13,13 @@ All projects are saved on the browser's local storage.
 
 Upon loading, it reads all entries that start with *"kanbasic-"*, and saves them on the application state. The projects on state are accessible through the menu.
 
+![Home Page](../media/home.png?raw=true)
+
 Whenever a change to a project is made, it's saved on the browser's storage. No changes are lost.
+
+From there, just create the tasks for the project, and start working on them!
+
+![Project Page](../media/project.png?raw=true)
 
 ## How to install
 
