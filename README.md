@@ -1,5 +1,28 @@
 # Kanbasic
 
-***WIP***
+A basic kanban board app. Manage multiple projects, with tasks on "to do", "doing" and "done". 
 
-A basic kanban board React app. Manage multiple projects, with tasks on "to do", "doing" and "done". 
+This app was built using React, Chakra UI, and Jest + React Testing Library for tests.
+
+Animations that weren't provided by Chakra were made with CSS keyframes.
+
+
+## How it works
+
+All projects are saved on the browser's local storage.
+
+Upon loading, it reads all entries that start with *"kanbasic-"*, and saves them on the application state. The projects on state are accessible through the menu.
+
+Whenever a change to a project is made, it's saved on the browser's storage. No changes are lost.
+
+## How to install
+
+Clone the project - or download the source code - install the dependencies, and start the application.
+
+```
+git clone https://github.com/vncsreis/kanbasic.git
+cd kanbasic
+
+npm install
+npm start
+```
