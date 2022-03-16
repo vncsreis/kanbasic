@@ -7,7 +7,7 @@ import Router from '../../../router/Router';
 import theme from '../../../theme';
 import { appendStyle } from '../../../__testUtils__/appendStyle';
 
-jest.setTimeout(15000);
+jest.setTimeout(30000);
 
 const mockNavigate = jest.fn();
 
