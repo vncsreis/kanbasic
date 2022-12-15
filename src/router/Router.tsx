@@ -6,7 +6,7 @@ import ProjectPage from "../pages/ProjectPage";
 export default function Router() {
   return (
     <Routes>
-      <Route path="/kanbasic" element={<App />}>
+      <Route path="/" element={<App />}>
         <Route path="/:project" element={<ProjectPage />} />
         <Route index element={<HomePage />} />
       </Route>
