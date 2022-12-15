@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/kanbasic/static/css/main.4e77248e.css",
-    "main.js": "/kanbasic/static/js/main.9e3c029b.js",
+    "main.js": "/kanbasic/static/js/main.ccd475eb.js",
     "static/media/zen-kaku-gothic-antique-all-400-normal.woff": "/kanbasic/static/media/zen-kaku-gothic-antique-all-400-normal.bc5e1a991db8eb7233c8.woff",
     "static/media/playfair-display-all-400-normal.woff": "/kanbasic/static/media/playfair-display-all-400-normal.c78ecfb0301e4e50185d.woff",
     "static/media/zen-kaku-gothic-antique-23-400-normal.woff2": "/kanbasic/static/media/zen-kaku-gothic-antique-23-400-normal.c6204f5a92c100729b65.woff2",
@@ -128,10 +128,10 @@
     "static/media/zen-kaku-gothic-antique-2-400-normal.woff2": "/kanbasic/static/media/zen-kaku-gothic-antique-2-400-normal.7a78c4ba4ecafb38c252.woff2",
     "index.html": "/kanbasic/index.html",
     "main.4e77248e.css.map": "/kanbasic/static/css/main.4e77248e.css.map",
-    "main.9e3c029b.js.map": "/kanbasic/static/js/main.9e3c029b.js.map"
+    "main.ccd475eb.js.map": "/kanbasic/static/js/main.ccd475eb.js.map"
   },
   "entrypoints": [
     "static/css/main.4e77248e.css",
-    "static/js/main.9e3c029b.js"
+    "static/js/main.ccd475eb.js"
   ]
 }
